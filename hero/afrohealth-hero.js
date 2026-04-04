@@ -1,6 +1,5 @@
 /**
- * AfroHealth hero — adds .is-visible for staggered entrance (content + tips bar).
- * Ken Burns motion is CSS-only on .afh-hero__character--motion.
+ * AfroHealth hero — .is-visible for staggered copy entrance; pauses hero video if reduced motion.
  */
 (function () {
   var hero = document.querySelector(".afh-hero");
@@ -14,6 +13,11 @@
 
   if (reduceMotion) {
     reveal();
+    var vid = hero.querySelector(".afh-hero__video");
+    if (vid) {
+      vid.removeAttribute("autoplay");
+      vid.pause();
+    }
   } else {
     requestAnimationFrame(function () {
       requestAnimationFrame(reveal);
