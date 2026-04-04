@@ -29,6 +29,7 @@
     {%- assign afh_has_video = true -%}
   {%- endif -%}
 
+  {%- assign afh_hold_ms = section.settings.video_hold_seconds | default: 12 | times: 1000 -%}
   <script type="application/json" class="afh-hero__video-config">
     [
       {%- assign first_vid = true -%}
@@ -38,12 +39,12 @@
           {%- assign u = p | strip -%}
           {%- if u != '' -%}
             {%- unless first_vid -%},{%- endunless -%}
-            "{{ u | escape }}"
+            { "url": "{{ u | escape }}", "hold": {{ afh_hold_ms }} }
             {%- assign first_vid = false -%}
           {%- endif -%}
         {%- endfor -%}
       {%- elsif section.settings.video_url != blank -%}
-        "{{ section.settings.video_url | escape }}"
+        { "url": "{{ section.settings.video_url | escape }}", "hold": {{ afh_hold_ms }} }
       {%- endif -%}
     ]
   </script>
@@ -135,13 +136,23 @@
       "type": "textarea",
       "id": "video_urls",
       "label": "Background video URLs",
-      "info": "Comma-separated MP4 URLs (each ~4s). For the full ~42s story (16 clips with custom timings), use theme code or duplicate this section’s JSON pattern in a custom Liquid snippet."
+      "info": "Comma-separated MP4 URLs in play order (e.g. 1st = gym, 2nd = herbal drinks). Each shows for the duration set below, then crossfades to the next; playlist loops."
     },
     {
       "type": "url",
       "id": "video_url",
       "label": "Single background video (MP4 URL)",
       "info": "Used if the list above is empty."
+    },
+    {
+      "type": "range",
+      "id": "video_hold_seconds",
+      "min": 4,
+      "max": 30,
+      "step": 1,
+      "default": 12,
+      "unit": "s",
+      "label": "Seconds each video plays before switching"
     },
     {
       "type": "text",
