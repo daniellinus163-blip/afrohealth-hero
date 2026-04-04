@@ -1,0 +1,180 @@
+{% comment %}
+  AfroHealth — Premium hero (Shopify Online Store 2.0)
+  1. Save as: sections/afrohealth-hero.liquid
+  2. Upload afrohealth-hero.css & afrohealth-hero.js to Assets (or paste CSS into theme custom CSS)
+  3. Add section on the home page template
+{% endcomment %}
+
+{{ 'afrohealth-hero.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+{%- assign bg_url = section.settings.background_image | image_url: width: 2400 -%}
+{%- assign poster_url = section.settings.background_image | image_url: width: 1600 -%}
+
+{% if section.settings.background_image != blank %}
+  <style>
+    #afh-hero-{{ section.id }} .afh-hero__image {
+      background-image: url("{{ bg_url | escape }}");
+    }
+  </style>
+{% endif %}
+
+<section
+  id="afh-hero-{{ section.id }}"
+  class="afh-hero"
+  aria-label="{{ section.settings.heading_line_1 | escape }}"
+>
+  <div class="afh-hero__media">
+    <div class="afh-hero__image" role="img" aria-hidden="true"></div>
+    {% if section.settings.video_url != blank %}
+      <div class="afh-hero__video-wrap">
+        <video
+          class="afh-hero__video"
+          autoplay
+          muted
+          loop
+          playsinline
+          {% if section.settings.background_image %}poster="{{ poster_url | escape }}"{% endif %}
+          aria-hidden="true"
+        >
+          <source src="{{ section.settings.video_url | escape }}" type="video/mp4">
+        </video>
+      </div>
+    {% endif %}
+    <div class="afh-hero__scrim" aria-hidden="true"></div>
+    <div class="afh-hero__grain" aria-hidden="true"></div>
+  </div>
+
+  <div class="afh-hero__inner">
+    <div class="afh-hero__content">
+      {% if section.settings.eyebrow != blank %}
+        <p class="afh-hero__eyebrow" data-afh-animate="1">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+
+      <h1 class="afh-hero__headline" data-afh-animate="2">
+        {{ section.settings.heading_line_1 | escape }}<br>
+        {{ section.settings.heading_line_2_prefix | escape }}
+        {% if section.settings.heading_accent != blank %}
+          <span class="afh-hero__accent">{{ section.settings.heading_accent | escape }}</span>
+        {% endif %}
+      </h1>
+
+      {% if section.settings.subheading != blank %}
+        <p class="afh-hero__sub" data-afh-animate="3">{{ section.settings.subheading | escape }}</p>
+      {% endif %}
+
+      <div class="afh-hero__trust" data-afh-animate="4">
+        <div class="afh-hero__trust-row">
+          <span class="afh-hero__stars" aria-label="{{ section.settings.reviews_rating_label | escape }}">★★★★★</span>
+          <span class="afh-hero__trust-text">{{ section.settings.reviews_text | escape }}</span>
+        </div>
+        <span class="afh-hero__trust-sep" aria-hidden="true"></span>
+        <span class="afh-hero__trust-pill">{{ section.settings.trust_pill_1 | escape }}</span>
+        <span class="afh-hero__trust-sep" aria-hidden="true"></span>
+        <span class="afh-hero__trust-pill">{{ section.settings.trust_pill_2 | escape }}</span>
+      </div>
+
+      {% if section.settings.cta_label != blank %}
+        <a class="afh-hero__cta" href="{{ section.settings.cta_link }}" data-afh-animate="5">
+          {{ section.settings.cta_label | escape }}
+          <span class="afh-hero__cta-icon" aria-hidden="true">→</span>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'afrohealth-hero.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "AfroHealth hero",
+  "tag": "section",
+  "class": "section-afrohealth-hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "url",
+      "id": "video_url",
+      "label": "Background video (MP4 URL)",
+      "info": "Optional. Upload MP4 to Files and paste the URL. Leave blank for image only."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Co-created by leading nutrition experts"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Headline line 1",
+      "default": "You've Been Running At 80%."
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2_prefix",
+      "label": "Headline line 2 (before accent)",
+      "default": "Here's "
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Headline accent (italic gold)",
+      "default": "The Other 20%."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheadline",
+      "default": "A daily greens drink co-created by leading nutrition experts to give you that extra 20% in one daily scoop."
+    },
+    {
+      "type": "text",
+      "id": "reviews_rating_label",
+      "label": "Star rating (accessibility label)",
+      "default": "4.7 out of 5 stars"
+    },
+    {
+      "type": "text",
+      "id": "reviews_text",
+      "label": "Reviews text",
+      "default": "4.7 verified reviews"
+    },
+    {
+      "type": "text",
+      "id": "trust_pill_1",
+      "label": "Trust pill 1",
+      "default": "Melanin-Optimised"
+    },
+    {
+      "type": "text",
+      "id": "trust_pill_2",
+      "label": "Trust pill 2",
+      "default": "Nutritionist-Formulated"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Claim your 20%"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "AfroHealth hero"
+    }
+  ]
+}
+{% endschema %}

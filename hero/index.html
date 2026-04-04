@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AfroHealth — Hero preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,600&family=Outfit:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="afrohealth-hero.css" />
+    <style>
+      .afh-hero .afh-hero__image {
+        background-image: url("assets/hero-bg.png");
+      }
+    </style>
+  </head>
+  <body style="margin: 0; background: #0a1810">
+    <!--
+      Shopify: upload hero-bg.png + optional mp4 to Files, then set URLs in section settings.
+      Replace # below with your product or signup URL.
+    -->
+    <section class="afh-hero" aria-label="Hero">
+      <div class="afh-hero__media">
+        <div class="afh-hero__image" role="img" aria-hidden="true"></div>
+        <div class="afh-hero__video-wrap">
+          <!-- Optional: Pexels wellness/greens b-roll — swap for your own hosted MP4 in production -->
+          <video
+            class="afh-hero__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            poster="assets/hero-bg.png"
+            aria-hidden="true"
+          >
+            <source
+              src="https://videos.pexels.com/video-files/3196394/3196394-hd_1920_1080_25fps.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </div>
+        <div class="afh-hero__scrim" aria-hidden="true"></div>
+        <div class="afh-hero__grain" aria-hidden="true"></div>
+      </div>
+
+      <div class="afh-hero__inner">
+        <div class="afh-hero__content">
+          <p class="afh-hero__eyebrow" data-afh-animate="1">
+            Co-created by leading nutrition experts
+          </p>
+          <h1 class="afh-hero__headline" data-afh-animate="2">
+            You’ve Been Running At 80%.<br />
+            Here’s <span class="afh-hero__accent">The Other 20%.</span>
+          </h1>
+          <p class="afh-hero__sub" data-afh-animate="3">
+            A daily greens drink co-created by leading nutrition experts to give you that extra
+            20% in one daily scoop.
+          </p>
+
+          <div class="afh-hero__trust" data-afh-animate="4">
+            <div class="afh-hero__trust-row">
+              <span class="afh-hero__stars" aria-label="4.7 out of 5 stars">★★★★★</span>
+              <span class="afh-hero__trust-text">4.7 verified reviews</span>
+            </div>
+            <span class="afh-hero__trust-sep" aria-hidden="true"></span>
+            <span class="afh-hero__trust-pill">Melanin-Optimised</span>
+            <span class="afh-hero__trust-sep" aria-hidden="true"></span>
+            <span class="afh-hero__trust-pill">Nutritionist-Formulated</span>
+          </div>
+
+          <a class="afh-hero__cta" href="#" data-afh-animate="5">
+            Claim your 20%
+            <span class="afh-hero__cta-icon" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <script src="afrohealth-hero.js" defer></script>
+  </body>
+</html>
