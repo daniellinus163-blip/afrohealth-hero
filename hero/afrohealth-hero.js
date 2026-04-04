@@ -1,6 +1,6 @@
 /**
- * AfroHealth hero — dual-layer video crossfade + configurable clip duration (default 4s)
- * Config: ["url"] or [{ "url": "...", "hold": 4000 }, ...]
+ * AfroHealth hero — sequential video crossfade. Config: [{ "url", "hold" }] or URL strings.
+ * Skips broken URLs; load timeout skips stuck clips so every segment can play.
  */
 (function () {
   var hero = document.querySelector(".afh-hero");
@@ -8,6 +8,7 @@
 
   var DEFAULT_HOLD = 4000;
   var FADE_MS = 900;
+  var LOAD_TIMEOUT_MS = 15000;
 
   function reveal() {
     hero.classList.add("is-visible");
@@ -65,6 +66,7 @@
   var idx = 0;
   var timer = null;
   var failed = {};
+  var advancing = false;
 
   function clearTimer() {
     if (timer) {
@@ -108,9 +110,50 @@
     }, h);
   }
 
+  function whenVideoReady(inV, onReady, onGaveUp, bootId) {
+    var done = false;
+    function cleanup() {
+      clearTimeout(loadTo);
+      inV.removeEventListener("canplaythrough", onThrough);
+      inV.removeEventListener("canplay", onCanPlay);
+    }
+    function finishOk() {
+      if (done) return;
+      if (bootId != null && bootId !== bootGen) return;
+      done = true;
+      cleanup();
+      onReady();
+    }
+    function finishSkip() {
+      if (done) return;
+      if (bootId != null && bootId !== bootGen) return;
+      done = true;
+      cleanup();
+      onGaveUp();
+    }
+    function onThrough() {
+      finishOk();
+    }
+    function onCanPlay() {
+      if (inV.readyState >= 3) finishOk();
+    }
+    var loadTo = window.setTimeout(finishSkip, LOAD_TIMEOUT_MS);
+    inV.addEventListener("canplaythrough", onThrough, { once: true });
+    inV.addEventListener("canplay", onCanPlay, { once: true });
+  }
+
   function advance() {
+    if (advancing) return;
+    if (urls.length < 2) return;
+
     var next = nextUrl(idx + 1);
-    if (!next) return;
+    if (!next) {
+      showFallback();
+      return;
+    }
+
+    advancing = true;
+    clearTimer();
 
     var outL = activeLayer();
     var inL = inactiveLayer();
@@ -120,10 +163,26 @@
     inV.preload = "auto";
     inV.src = next.entry.url;
 
+    function skipThis() {
+      failed[next.entry.url] = true;
+      inV.removeAttribute("src");
+      inV.load();
+      advancing = false;
+      window.setTimeout(advance, 0);
+    }
+
     inV.addEventListener(
-      "canplay",
-      function onReady() {
-        inV.removeEventListener("canplay", onReady);
+      "error",
+      function onErr() {
+        inV.removeEventListener("error", onErr);
+        skipThis();
+      },
+      { once: true }
+    );
+
+    whenVideoReady(
+      inV,
+      function swap() {
         inL.classList.add("is-active");
         outL.classList.remove("is-active");
         active = 1 - active;
@@ -135,51 +194,63 @@
           outV.load();
           outV.preload = "none";
         }, FADE_MS);
-        if (urls.length >= 2) scheduleAdvanceFromCurrent();
+        advancing = false;
+        scheduleAdvanceFromCurrent();
       },
-      { once: true }
-    );
-
-    inV.addEventListener(
-      "error",
-      function onErr() {
-        inV.removeEventListener("error", onErr);
-        failed[next.entry.url] = true;
-        inV.removeAttribute("src");
-        inV.load();
-        if (urls.length >= 2) scheduleAdvanceFromCurrent();
-      },
-      { once: true }
+      skipThis,
+      null
     );
   }
 
-  var first = nextUrl(0);
-  if (!first) return;
+  var bootGen = 0;
 
-  v0.src = first.entry.url;
-  idx = first.index;
-
-  function onFirstPlay() {
-    v0.removeEventListener("canplay", onFirstPlay);
+  function startFirst() {
     wrap.classList.add("is-ready");
     v0.play().catch(function () {});
     if (urls.length >= 2) scheduleAdvanceFromCurrent();
   }
 
-  v0.addEventListener("canplay", onFirstPlay, { once: true });
-  v0.addEventListener(
-    "error",
-    function () {
-      failed[first.entry.url] = true;
-      var second = nextUrl(1);
-      if (!second) {
-        showFallback();
-        return;
-      }
-      v0.src = second.entry.url;
-      idx = second.index;
-      v0.addEventListener("canplay", onFirstPlay, { once: true });
-    },
-    { once: true }
-  );
+  function tryFirstVideo(startIndex) {
+    var pick = nextUrl(startIndex);
+    if (!pick) {
+      showFallback();
+      return;
+    }
+
+    bootGen++;
+    var myBoot = bootGen;
+
+    v0.src = pick.entry.url;
+    idx = pick.index;
+
+    function onFirstError() {
+      if (myBoot !== bootGen) return;
+      failed[pick.entry.url] = true;
+      v0.removeAttribute("src");
+      v0.load();
+      tryFirstVideo(startIndex + 1);
+    }
+
+    v0.addEventListener("error", onFirstError, { once: true });
+
+    whenVideoReady(
+      v0,
+      function () {
+        if (myBoot !== bootGen) return;
+        v0.removeEventListener("error", onFirstError);
+        startFirst();
+      },
+      function () {
+        if (myBoot !== bootGen) return;
+        v0.removeEventListener("error", onFirstError);
+        failed[pick.entry.url] = true;
+        v0.removeAttribute("src");
+        v0.load();
+        tryFirstVideo(startIndex + 1);
+      },
+      myBoot
+    );
+  }
+
+  tryFirstVideo(0);
 })();
