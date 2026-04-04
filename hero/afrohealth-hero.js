@@ -1,12 +1,13 @@
 /**
- * AfroHealth hero — text reveal + dual-layer video crossfade (max 2 videos decoding)
+ * AfroHealth hero — dual-layer video crossfade + configurable clip duration (default 4s)
+ * Config: ["url"] or [{ "url": "...", "hold": 4000 }, ...]
  */
 (function () {
   var hero = document.querySelector(".afh-hero");
   if (!hero) return;
 
-  var ROTATE_MS = 7000;
-  var FADE_MS = 1200;
+  var DEFAULT_HOLD = 4000;
+  var FADE_MS = 900;
 
   function reveal() {
     hero.classList.add("is-visible");
@@ -29,19 +30,28 @@
   var wrap = hero.querySelector(".afh-hero__video-wrap");
   if (!cfgEl || !wrap || reduceMotion) return;
 
-  var urls = [];
+  var raw = [];
   try {
-    urls = JSON.parse(cfgEl.textContent.trim() || "[]");
+    raw = JSON.parse(cfgEl.textContent.trim() || "[]");
   } catch (e) {
     return;
   }
-  if (!Array.isArray(urls) || urls.length === 0) return;
+  if (!Array.isArray(raw) || raw.length === 0) return;
 
-  urls = urls
-    .map(function (u) {
-      return typeof u === "string" ? u.trim() : "";
-    })
-    .filter(Boolean);
+  var urls = [];
+  for (var i = 0; i < raw.length; i++) {
+    var item = raw[i];
+    if (typeof item === "string") {
+      var s = item.trim();
+      if (s) urls.push({ url: s, hold: DEFAULT_HOLD });
+    } else if (item && typeof item === "object" && item.url) {
+      var u = String(item.url).trim();
+      if (u) {
+        var h = parseInt(item.hold, 10);
+        urls.push({ url: u, hold: h > 0 ? h : DEFAULT_HOLD });
+      }
+    }
+  }
   if (urls.length === 0) return;
 
   var layers = wrap.querySelectorAll(".afh-hero__video-layer");
@@ -56,6 +66,13 @@
   var timer = null;
   var failed = {};
 
+  function clearTimer() {
+    if (timer) {
+      window.clearTimeout(timer);
+      timer = null;
+    }
+  }
+
   function activeLayer() {
     return layers[active];
   }
@@ -68,8 +85,8 @@
     var i = start;
     var tries = 0;
     while (tries < n) {
-      var u = urls[i % n];
-      if (!failed[u]) return { url: u, index: i % n };
+      var entry = urls[i % n];
+      if (!failed[entry.url]) return { entry: entry, index: i % n };
       i++;
       tries++;
     }
@@ -80,10 +97,15 @@
     wrap.style.display = "none";
     wrap.classList.remove("is-ready");
     hero.classList.add("afh-hero--video-fallback");
-    if (timer) {
-      window.clearInterval(timer);
-      timer = null;
-    }
+    clearTimer();
+  }
+
+  function scheduleAdvanceFromCurrent() {
+    clearTimer();
+    var h = urls[idx] ? urls[idx].hold : DEFAULT_HOLD;
+    timer = window.setTimeout(function () {
+      advance();
+    }, h);
   }
 
   function advance() {
@@ -96,7 +118,7 @@
     var inV = inL.querySelector("video");
 
     inV.preload = "auto";
-    inV.src = next.url;
+    inV.src = next.entry.url;
 
     inV.addEventListener(
       "canplay",
@@ -113,6 +135,7 @@
           outV.load();
           outV.preload = "none";
         }, FADE_MS);
+        if (urls.length >= 2) scheduleAdvanceFromCurrent();
       },
       { once: true }
     );
@@ -121,44 +144,39 @@
       "error",
       function onErr() {
         inV.removeEventListener("error", onErr);
-        failed[next.url] = true;
+        failed[next.entry.url] = true;
         inV.removeAttribute("src");
         inV.load();
+        if (urls.length >= 2) scheduleAdvanceFromCurrent();
       },
       { once: true }
     );
   }
 
-  function startRotation() {
-    if (urls.length < 2) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    timer = window.setInterval(advance, ROTATE_MS);
-  }
-
   var first = nextUrl(0);
   if (!first) return;
 
-  v0.src = first.url;
+  v0.src = first.entry.url;
   idx = first.index;
 
   function onFirstPlay() {
     v0.removeEventListener("canplay", onFirstPlay);
     wrap.classList.add("is-ready");
     v0.play().catch(function () {});
-    startRotation();
+    if (urls.length >= 2) scheduleAdvanceFromCurrent();
   }
 
   v0.addEventListener("canplay", onFirstPlay, { once: true });
   v0.addEventListener(
     "error",
     function () {
-      failed[first.url] = true;
+      failed[first.entry.url] = true;
       var second = nextUrl(1);
       if (!second) {
         showFallback();
         return;
       }
-      v0.src = second.url;
+      v0.src = second.entry.url;
       idx = second.index;
       v0.addEventListener("canplay", onFirstPlay, { once: true });
     },

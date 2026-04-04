@@ -1,12 +1,11 @@
 {% comment %}
-  AfroHealth — Vibrant glass hero (Shopify OS 2.0)
-  Upload afrohealth-hero.css & afrohealth-hero.js to Assets.
+  AfroHealth — Minimal health hero (Shopify OS 2.0). Upload afrohealth-hero.css & afrohealth-hero.js to Assets.
 {% endcomment %}
 
 {{ 'afrohealth-hero.css' | asset_url | stylesheet_tag }}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 {%- assign bg_url = section.settings.background_image | image_url: width: 2400 -%}
 {%- assign poster_url = section.settings.background_image | image_url: width: 1600 -%}
@@ -136,7 +135,7 @@
       "type": "textarea",
       "id": "video_urls",
       "label": "Background video URLs",
-      "info": "Comma-separated MP4 URLs (e.g. from Shopify Files). Rotates with crossfade. Optional if you use a single URL below."
+      "info": "Comma-separated MP4 URLs (Shopify Files). Each clip shows ~4s (~24s per full loop with 6 clips). Optional if you use a single URL below."
     },
     {
       "type": "url",
