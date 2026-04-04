@@ -12,83 +12,57 @@
     />
     <link rel="stylesheet" href="afrohealth-hero.css" />
   </head>
-  <body style="margin: 0; background: #e8f6ef">
+  <body style="margin: 0; background: #f2f7f2">
     <!--
-      Hero: 2 videos — gym, then herbal / wellness drinks — then loops. No static girl hero image.
-      Shopify: paste two MP4 URLs (gym first, drinks second) or use JSON in a custom snippet.
+      Bright wellness layout (HealthFirst-style): copy left, character image right.
+      Character: hero/assets/hero-character.png — replace in Shopify via section image.
     -->
     <section class="afh-hero" aria-label="Hero">
-      <script type="application/json" class="afh-hero__video-config">
-        [
-          {
-            "url": "https://videos.pexels.com/video-files/6388431/6388431-hd_1920_1080_25fps.mp4",
-            "hold": 12000,
-            "label": "Gym / fitness centre"
-          },
-          {
-            "url": "https://videos.pexels.com/video-files/6212624/6212624-hd_1920_1080_25fps.mp4",
-            "hold": 12000,
-            "label": "Herbal / wellness drinks"
-          }
-        ]
-      </script>
-
-      <div class="afh-hero__media">
-        <div class="afh-hero__image" role="img" aria-hidden="true"></div>
-        <div class="afh-hero__video-wrap" aria-hidden="true">
-          <div class="afh-hero__video-layer is-active">
-            <video
-              class="afh-hero__video"
-              muted
-              loop
-              playsinline
-              preload="metadata"
-            ></video>
-          </div>
-          <div class="afh-hero__video-layer">
-            <video
-              class="afh-hero__video"
-              muted
-              loop
-              playsinline
-              preload="none"
-            ></video>
-          </div>
-        </div>
-        <div class="afh-hero__scrim" aria-hidden="true"></div>
-        <div class="afh-hero__vignette" aria-hidden="true"></div>
-        <div class="afh-hero__grain" aria-hidden="true"></div>
-      </div>
+      <div class="afh-hero__bg" aria-hidden="true"></div>
 
       <div class="afh-hero__inner">
-        <div class="afh-hero__content">
-          <p class="afh-hero__eyebrow" data-afh-animate="1">
-            Co-created by leading nutrition experts
-          </p>
-          <h1 class="afh-hero__headline" data-afh-animate="2">
-            You’ve Been Running At 80%.<br />
-            Here’s <span class="afh-hero__accent">The Other 20%.</span>
-          </h1>
-          <p class="afh-hero__sub" data-afh-animate="3">
-            A daily greens drink co-created by leading nutrition experts to give you that extra
-            20% in one daily scoop.
-          </p>
+        <div class="afh-hero__layout">
+          <div class="afh-hero__content">
+            <p class="afh-hero__eyebrow" data-afh-animate="1">
+              Co-created by leading nutrition experts
+            </p>
+            <h1 class="afh-hero__headline" data-afh-animate="2">
+              You’ve Been Running At 80%.<br />
+              Here’s <span class="afh-hero__accent">The Other 20%.</span>
+            </h1>
+            <p class="afh-hero__sub" data-afh-animate="3">
+              A daily greens drink co-created by leading nutrition experts to give you that extra
+              20% in one daily scoop.
+            </p>
 
-          <div class="afh-hero__trust" data-afh-animate="4">
-            <div class="afh-hero__trust-row">
-              <span class="afh-hero__stars" aria-label="4.7 out of 5 stars">★★★★★</span>
-              <span class="afh-hero__trust-text">4.7 verified reviews</span>
+            <div class="afh-hero__trust" data-afh-animate="4">
+              <div class="afh-hero__trust-row">
+                <span class="afh-hero__stars" aria-label="4.7 out of 5 stars">★★★★★</span>
+                <span class="afh-hero__trust-text">4.7 verified reviews</span>
+              </div>
+              <span class="afh-hero__trust-sep" aria-hidden="true"></span>
+              <span class="afh-hero__trust-pill">Melanin-Optimised</span>
+              <span class="afh-hero__trust-sep" aria-hidden="true"></span>
+              <span class="afh-hero__trust-pill">Nutritionist-Formulated</span>
             </div>
-            <span class="afh-hero__trust-sep" aria-hidden="true"></span>
-            <span class="afh-hero__trust-pill">Melanin-Optimised</span>
-            <span class="afh-hero__trust-sep" aria-hidden="true"></span>
-            <span class="afh-hero__trust-pill">Nutritionist-Formulated</span>
+
+            <a class="afh-hero__cta" href="#" data-afh-animate="5">
+              Claim your 20%
+              <span class="afh-hero__cta-icon" aria-hidden="true">→</span>
+            </a>
           </div>
 
-          <a class="afh-hero__cta" href="#" data-afh-animate="5">
-            Claim your 20%
-            <span class="afh-hero__cta-icon" aria-hidden="true">→</span>
-          </a>
+          <div class="afh-hero__figure" data-afh-animate="2">
+            <img
+              class="afh-hero__character"
+              src="assets/hero-character.png"
+              width="720"
+              height="900"
+              alt="Smiling person enjoying a fresh healthy salad."
+              loading="eager"
+              decoding="async"
+            />
+          </div>
         </div>
       </div>
     </section>
