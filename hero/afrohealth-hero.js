@@ -25,11 +25,17 @@
       function onCanPlay() {
         video.removeEventListener("canplay", onCanPlay);
         wrap.classList.add("is-ready");
+        var p = video.play();
+        if (p && typeof p.catch === "function") {
+          p.catch(function () {});
+        }
       },
       { once: true }
     );
     video.addEventListener("error", function () {
       wrap.style.display = "none";
+      wrap.classList.remove("is-ready");
+      hero.classList.add("afh-hero--video-fallback");
     });
   }
 })();

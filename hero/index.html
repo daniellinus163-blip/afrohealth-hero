@@ -26,7 +26,7 @@
       <div class="afh-hero__media">
         <div class="afh-hero__image" role="img" aria-hidden="true"></div>
         <div class="afh-hero__video-wrap">
-          <!-- Optional: Pexels wellness/greens b-roll — swap for your own hosted MP4 in production -->
+          <!-- Full-width lifestyle video (autoplay / loop / muted). Fallback: poster + .afh-hero__image below. Host your own MP4 in production. -->
           <video
             class="afh-hero__video"
             autoplay
@@ -37,7 +37,11 @@
             aria-hidden="true"
           >
             <source
-              src="https://videos.pexels.com/video-files/3196394/3196394-hd_1920_1080_25fps.mp4"
+              src="https://videos.pexels.com/video-files/6388431/6388431-hd_1920_1080_25fps.mp4"
+              type="video/mp4"
+            />
+            <source
+              src="https://videos.pexels.com/video-files/6697869/6697869-hd_1920_1080_25fps.mp4"
               type="video/mp4"
             />
           </video>
