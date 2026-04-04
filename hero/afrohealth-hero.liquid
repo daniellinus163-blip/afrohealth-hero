@@ -1,8 +1,6 @@
 {% comment %}
-  AfroHealth — Premium hero (Shopify Online Store 2.0)
-  1. Save as: sections/afrohealth-hero.liquid
-  2. Upload afrohealth-hero.css & afrohealth-hero.js to Assets (or paste CSS into theme custom CSS)
-  3. Add section on the home page template
+  AfroHealth — Vibrant glass hero (Shopify OS 2.0)
+  Upload afrohealth-hero.css & afrohealth-hero.js to Assets.
 {% endcomment %}
 
 {{ 'afrohealth-hero.css' | asset_url | stylesheet_tag }}
@@ -26,24 +24,59 @@
   class="afh-hero"
   aria-label="{{ section.settings.heading_line_1 | escape }}"
 >
+  {%- assign afh_urls_trim = section.settings.video_urls | strip -%}
+  {%- assign afh_has_video = false -%}
+  {%- if section.settings.video_url != blank or afh_urls_trim != '' -%}
+    {%- assign afh_has_video = true -%}
+  {%- endif -%}
+
+  <script type="application/json" class="afh-hero__video-config">
+    [
+      {%- assign first_vid = true -%}
+      {%- if section.settings.video_urls != blank -%}
+        {%- assign parts = section.settings.video_urls | split: ',' -%}
+        {%- for p in parts -%}
+          {%- assign u = p | strip -%}
+          {%- if u != '' -%}
+            {%- unless first_vid -%},{%- endunless -%}
+            "{{ u | escape }}"
+            {%- assign first_vid = false -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- elsif section.settings.video_url != blank -%}
+        "{{ section.settings.video_url | escape }}"
+      {%- endif -%}
+    ]
+  </script>
+
   <div class="afh-hero__media">
     <div class="afh-hero__image" role="img" aria-hidden="true"></div>
-    {% if section.settings.video_url != blank %}
-      <div class="afh-hero__video-wrap">
+    {% if afh_has_video %}
+    <div class="afh-hero__video-wrap" aria-hidden="true">
+      <div class="afh-hero__video-layer is-active">
         <video
           class="afh-hero__video"
-          autoplay
           muted
           loop
           playsinline
-          {% if section.settings.background_image %}poster="{{ poster_url | escape }}"{% endif %}
-          aria-hidden="true"
-        >
-          <source src="{{ section.settings.video_url | escape }}" type="video/mp4">
-        </video>
+          preload="metadata"
+          {% if section.settings.background_image != blank %}poster="{{ poster_url | escape }}"{% endif %}
+        ></video>
       </div>
+      <div class="afh-hero__video-layer">
+        <video
+          class="afh-hero__video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          {% if section.settings.background_image != blank %}poster="{{ poster_url | escape }}"{% endif %}
+        ></video>
+      </div>
+    </div>
     {% endif %}
     <div class="afh-hero__scrim" aria-hidden="true"></div>
+    <div class="afh-hero__vignette" aria-hidden="true"></div>
     <div class="afh-hero__grain" aria-hidden="true"></div>
   </div>
 
@@ -97,13 +130,19 @@
     {
       "type": "image_picker",
       "id": "background_image",
-      "label": "Background image"
+      "label": "Fallback image (poster / no-video)"
+    },
+    {
+      "type": "textarea",
+      "id": "video_urls",
+      "label": "Background video URLs",
+      "info": "Comma-separated MP4 URLs (e.g. from Shopify Files). Rotates with crossfade. Optional if you use a single URL below."
     },
     {
       "type": "url",
       "id": "video_url",
-      "label": "Background video (MP4 URL)",
-      "info": "Optional. Upload MP4 to Files and paste the URL. Leave blank for image only."
+      "label": "Single background video (MP4 URL)",
+      "info": "Used if the list above is empty."
     },
     {
       "type": "text",
@@ -126,7 +165,7 @@
     {
       "type": "text",
       "id": "heading_accent",
-      "label": "Headline accent (italic gold)",
+      "label": "Headline accent",
       "default": "The Other 20%."
     },
     {
