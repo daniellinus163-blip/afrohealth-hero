@@ -14,55 +14,102 @@
   </head>
   <body style="margin: 0; background: #f2f7f2">
     <!--
-      Bright wellness layout (HealthFirst-style): copy left, character image right.
-      Character: hero/assets/hero-character.png — replace in Shopify via section image.
+      Cinematic hero: same photo animates slowly (Ken Burns) so it feels like video.
+      Woman + salad framed on the right; your AfroHealth copy unchanged on the left.
     -->
     <section class="afh-hero" aria-label="Hero">
-      <div class="afh-hero__bg" aria-hidden="true"></div>
+      <div class="afh-hero__main">
+        <div class="afh-hero__bg" aria-hidden="true"></div>
 
-      <div class="afh-hero__inner">
-        <div class="afh-hero__layout">
-          <div class="afh-hero__content">
-            <p class="afh-hero__eyebrow" data-afh-animate="1">
-              Co-created by leading nutrition experts
-            </p>
-            <h1 class="afh-hero__headline" data-afh-animate="2">
-              You’ve Been Running At 80%.<br />
-              Here’s <span class="afh-hero__accent">The Other 20%.</span>
-            </h1>
-            <p class="afh-hero__sub" data-afh-animate="3">
-              A daily greens drink co-created by leading nutrition experts to give you that extra
-              20% in one daily scoop.
-            </p>
+        <div class="afh-hero__inner">
+          <div class="afh-hero__layout">
+            <div class="afh-hero__content">
+              <p class="afh-hero__eyebrow" data-afh-animate="1">
+                Co-created by leading nutrition experts
+              </p>
+              <h1 class="afh-hero__headline" data-afh-animate="2">
+                You’ve Been Running At 80%.<br />
+                Here’s <span class="afh-hero__accent">The Other 20%.</span>
+              </h1>
+              <p class="afh-hero__sub" data-afh-animate="3">
+                A daily greens drink co-created by leading nutrition experts to give you that extra
+                20% in one daily scoop.
+              </p>
 
-            <div class="afh-hero__trust" data-afh-animate="4">
-              <div class="afh-hero__trust-row">
-                <span class="afh-hero__stars" aria-label="4.7 out of 5 stars">★★★★★</span>
-                <span class="afh-hero__trust-text">4.7 verified reviews</span>
+              <div class="afh-hero__trust" data-afh-animate="4">
+                <div class="afh-hero__trust-row">
+                  <span class="afh-hero__stars" aria-label="4.7 out of 5 stars">★★★★★</span>
+                  <span class="afh-hero__trust-text">4.7 verified reviews</span>
+                </div>
+                <span class="afh-hero__trust-sep" aria-hidden="true"></span>
+                <span class="afh-hero__trust-pill">Melanin-Optimised</span>
+                <span class="afh-hero__trust-sep" aria-hidden="true"></span>
+                <span class="afh-hero__trust-pill">Nutritionist-Formulated</span>
               </div>
-              <span class="afh-hero__trust-sep" aria-hidden="true"></span>
-              <span class="afh-hero__trust-pill">Melanin-Optimised</span>
-              <span class="afh-hero__trust-sep" aria-hidden="true"></span>
-              <span class="afh-hero__trust-pill">Nutritionist-Formulated</span>
+
+              <a class="afh-hero__cta afh-hero__cta--outline" href="#" data-afh-animate="5">
+                Claim your 20%
+                <span class="afh-hero__cta-icon" aria-hidden="true">→</span>
+              </a>
             </div>
 
-            <a class="afh-hero__cta" href="#" data-afh-animate="5">
-              Claim your 20%
-              <span class="afh-hero__cta-icon" aria-hidden="true">→</span>
-            </a>
+            <div class="afh-hero__cinema" data-afh-animate="2">
+              <div class="afh-hero__cinema-frame">
+                <img
+                  class="afh-hero__character afh-hero__character--motion"
+                  src="assets/hero-character.png"
+                  width="960"
+                  height="1200"
+                  alt="Smiling person enjoying a fresh healthy salad in a bright, natural setting."
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
 
-          <div class="afh-hero__figure" data-afh-animate="2">
-            <img
-              class="afh-hero__character"
-              src="assets/hero-character.png"
-              width="720"
-              height="900"
-              alt="Smiling person enjoying a fresh healthy salad."
-              loading="eager"
-              decoding="async"
-            />
+      <div class="afh-hero__feature-bar" aria-label="Nutrition tips">
+        <div class="afh-hero__feature-inner">
+          <div class="afh-hero__feature-copy">
+            <h2 class="afh-hero__feature-title" data-afh-bar="1">Nutrition tips</h2>
+            <p class="afh-hero__feature-text" data-afh-bar="2">
+              Small daily habits that pair perfectly with your greens — stay consistent, stay
+              energised.
+            </p>
+            <a class="afh-hero__feature-cta" href="#" data-afh-bar="3">Contact us</a>
           </div>
+          <ul class="afh-hero__feature-grid" role="list">
+            <li class="afh-hero__tip" data-afh-bar="4">
+              <span class="afh-hero__tip-badge" aria-hidden="true">01</span>
+              <span class="afh-hero__tip-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3C8.5 3 6 5.5 6 9c0 4 3 8 6 12 3-4 6-8 6-12 0-3.5-2.5-6-6-6z" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M12 9v4M10 7h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              </span>
+              <span class="afh-hero__tip-label">Healthy diets</span>
+            </li>
+            <li class="afh-hero__tip" data-afh-bar="5">
+              <span class="afh-hero__tip-badge" aria-hidden="true">02</span>
+              <span class="afh-hero__tip-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 14l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="afh-hero__tip-label">Exercise daily</span>
+            </li>
+            <li class="afh-hero__tip" data-afh-bar="6">
+              <span class="afh-hero__tip-badge" aria-hidden="true">03</span>
+              <span class="afh-hero__tip-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="13" rx="7" ry="5" stroke="currentColor" stroke-width="1.5"/><path d="M8 10V8a4 4 0 018 0v2" stroke="currentColor" stroke-width="1.5"/><path d="M10 13h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              </span>
+              <span class="afh-hero__tip-label">Eat fresh</span>
+            </li>
+            <li class="afh-hero__tip" data-afh-bar="7">
+              <span class="afh-hero__tip-badge" aria-hidden="true">04</span>
+              <span class="afh-hero__tip-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4v16M8 8h8M8 16h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.2" opacity="0.5"/></svg>
+              </span>
+              <span class="afh-hero__tip-label">Diet nutrition</span>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
