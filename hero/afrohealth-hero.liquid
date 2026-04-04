@@ -1,5 +1,5 @@
 {% comment %}
-  AfroHealth — Split hero: copy left, ~10 s looping hero video right. Upload afrohealth-hero.css & afrohealth-hero.js to Assets.
+  AfroHealth — Split hero: copy left, looping hero video right (upload or MP4 URL; default matches afrohealth.co.uk).
 {% endcomment %}
 
 {{ 'afrohealth-hero.css' | asset_url | stylesheet_tag }}
@@ -53,7 +53,7 @@
           {% endif %}
         </div>
 
-        {% if section.settings.hero_video != blank %}
+        {% if section.settings.hero_video != blank or section.settings.hero_video_url != blank %}
           <div
             class="afh-hero__video-stage"
             data-afh-animate="2"
@@ -63,18 +63,30 @@
             {% endif %}
           >
             <div class="afh-hero__video-frame">
-              {{
-                section.settings.hero_video
-                | video_tag:
-                  class: 'afh-hero__video',
-                  autoplay: true,
-                  loop: true,
-                  muted: true,
-                  controls: false,
-                  playsinline: true,
-                  preload: 'auto',
-                  image_size: '1100x'
-              }}
+              {% if section.settings.hero_video != blank %}
+                {{
+                  section.settings.hero_video
+                  | video_tag:
+                    class: 'afh-hero__video',
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    controls: false,
+                    playsinline: true,
+                    preload: 'auto',
+                    image_size: '1100x'
+                }}
+              {% else %}
+                <video
+                  class="afh-hero__video"
+                  src="{{ section.settings.hero_video_url | escape }}"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="auto"
+                ></video>
+              {% endif %}
             </div>
           </div>
         {% endif %}
@@ -94,14 +106,21 @@
     {
       "type": "video",
       "id": "hero_video",
-      "label": "Hero video",
-      "info": "About 10 seconds, looping (e.g. gym + herbs). Hosted in Shopify Files."
+      "label": "Hero video (uploaded)",
+      "info": "Optional. If empty, the MP4 URL below is used (default matches afrohealth.co.uk hero)."
+    },
+    {
+      "type": "text",
+      "id": "hero_video_url",
+      "label": "Hero video MP4 URL",
+      "default": "https://cdn.shopify.com/videos/c/o/v/d426147b68ed42cc9c6d5fa700b0eb7d.mp4",
+      "info": "Direct link to your looping hero clip. Same asset as the live Afro Health homepage when using the default."
     },
     {
       "type": "text",
       "id": "hero_video_aria_label",
       "label": "Video description (accessibility)",
-      "default": "People training in a gym and taking herbs and supplements."
+      "default": "Afro Health hero: active lifestyles and daily wellness."
     },
     {
       "type": "text",
