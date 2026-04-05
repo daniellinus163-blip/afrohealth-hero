@@ -1,5 +1,5 @@
 {% comment %}
-  AfroHealth — Full-bleed hero video with copy overlaid; MP4 URL or upload; nutrition tips bar below.
+  AfroHealth — Full-bleed hero video, copy on light surface. Green #4CAF50 + blue #2196F3 + white + #F5F5F5.
 {% endcomment %}
 
 {{ 'afrohealth-hero.css' | asset_url | stylesheet_tag }}
@@ -78,7 +78,7 @@
             <span class="afh-hero__trust-sep" aria-hidden="true"></span>
             <span class="afh-hero__trust-pill">{{ section.settings.trust_pill_1 | escape }}</span>
             <span class="afh-hero__trust-sep" aria-hidden="true"></span>
-            <span class="afh-hero__trust-pill">{{ section.settings.trust_pill_2 | escape }}</span>
+            <span class="afh-hero__trust-pill afh-hero__trust-pill--blue">{{ section.settings.trust_pill_2 | escape }}</span>
           </div>
 
           {% if section.settings.cta_label != blank %}
@@ -89,64 +89,6 @@
           {% endif %}
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="afh-hero__feature-bar" aria-label="{{ section.settings.feature_bar_title | escape }}">
-    <div class="afh-hero__feature-inner">
-      <div class="afh-hero__feature-copy">
-        {% if section.settings.feature_bar_title != blank %}
-          <h2 class="afh-hero__feature-title" data-afh-bar="1">{{ section.settings.feature_bar_title | escape }}</h2>
-        {% endif %}
-        {% if section.settings.feature_bar_text != blank %}
-          <p class="afh-hero__feature-text" data-afh-bar="2">{{ section.settings.feature_bar_text | escape }}</p>
-        {% endif %}
-        {% if section.settings.feature_cta_label != blank %}
-          <a class="afh-hero__feature-cta" href="{{ section.settings.feature_cta_link }}" data-afh-bar="3">{{ section.settings.feature_cta_label | escape }}</a>
-        {% endif %}
-      </div>
-      <ul class="afh-hero__feature-grid" role="list">
-        <li class="afh-hero__tip" data-afh-bar="4">
-          <span class="afh-hero__tip-badge" aria-hidden="true">01</span>
-          <span class="afh-hero__tip-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M12 21s7-4.5 7-11a7 7 0 10-14 0c0 6.5 7 11 7 11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M9.5 10v4M11 10v4M9.5 12h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <span class="afh-hero__tip-label">{{ section.settings.tip_1_label | escape }}</span>
-        </li>
-        <li class="afh-hero__tip" data-afh-bar="5">
-          <span class="afh-hero__tip-badge" aria-hidden="true">02</span>
-          <span class="afh-hero__tip-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M6 20v-1a4 4 0 014-4h4a4 4 0 014 4v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <span class="afh-hero__tip-label">{{ section.settings.tip_2_label | escape }}</span>
-        </li>
-        <li class="afh-hero__tip" data-afh-bar="6">
-          <span class="afh-hero__tip-badge" aria-hidden="true">03</span>
-          <span class="afh-hero__tip-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M12 4v14M9 7h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M8 18h8v2H8v-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            </svg>
-          </span>
-          <span class="afh-hero__tip-label">{{ section.settings.tip_3_label | escape }}</span>
-        </li>
-        <li class="afh-hero__tip" data-afh-bar="7">
-          <span class="afh-hero__tip-badge" aria-hidden="true">04</span>
-          <span class="afh-hero__tip-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <span class="afh-hero__tip-label">{{ section.settings.tip_4_label | escape }}</span>
-        </li>
-      </ul>
     </div>
   </div>
 </section>
@@ -163,14 +105,14 @@
       "type": "video",
       "id": "hero_video",
       "label": "Hero video (uploaded)",
-      "info": "Optional. Full-bleed behind hero text. If empty, the MP4 URL below is used (default matches afrohealth.co.uk)."
+      "info": "Optional. Full-bleed behind hero text. If empty, the MP4 URL below is used."
     },
     {
       "type": "text",
       "id": "hero_video_url",
       "label": "Hero video MP4 URL",
       "default": "https://cdn.shopify.com/videos/c/o/v/d426147b68ed42cc9c6d5fa700b0eb7d.mp4",
-      "info": "Direct link to your looping hero clip. Same asset as the live Afro Health homepage when using the default."
+      "info": "Direct link to your looping hero clip."
     },
     {
       "type": "text",
@@ -229,7 +171,7 @@
     {
       "type": "text",
       "id": "trust_pill_2",
-      "label": "Trust pill 2",
+      "label": "Trust pill 2 (blue accent)",
       "default": "Nutritionist-Formulated"
     },
     {
@@ -242,57 +184,6 @@
       "type": "url",
       "id": "cta_link",
       "label": "Primary button link"
-    },
-    {
-      "type": "header",
-      "content": "Nutrition tips bar"
-    },
-    {
-      "type": "text",
-      "id": "feature_bar_title",
-      "label": "Tips bar title",
-      "default": "Nutrition tips"
-    },
-    {
-      "type": "textarea",
-      "id": "feature_bar_text",
-      "label": "Tips bar text",
-      "default": "Small daily habits that pair perfectly with your greens — stay consistent, stay energised."
-    },
-    {
-      "type": "text",
-      "id": "feature_cta_label",
-      "label": "Tips bar button label",
-      "default": "Contact us"
-    },
-    {
-      "type": "url",
-      "id": "feature_cta_link",
-      "label": "Tips bar button link"
-    },
-    {
-      "type": "text",
-      "id": "tip_1_label",
-      "label": "Tip 1 label",
-      "default": "Healthy diets"
-    },
-    {
-      "type": "text",
-      "id": "tip_2_label",
-      "label": "Tip 2 label",
-      "default": "Exercise daily"
-    },
-    {
-      "type": "text",
-      "id": "tip_3_label",
-      "label": "Tip 3 label",
-      "default": "Eat fresh"
-    },
-    {
-      "type": "text",
-      "id": "tip_4_label",
-      "label": "Tip 4 label",
-      "default": "Diet nutrition"
     }
   ],
   "presets": [
