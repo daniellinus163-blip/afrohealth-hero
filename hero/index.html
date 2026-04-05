@@ -14,12 +14,22 @@
   </head>
   <body style="margin: 0; background: #f2f7f2">
     <!--
-      Hero video: same looped MP4 as afrohealth.co.uk (Shopify CDN). Override src if you self-host.
-      Copy and CTA unchanged.
+      Full-bleed hero video (same MP4 as beside-text version); copy sits on top with a light scrim.
     -->
-    <section class="afh-hero" aria-label="Hero">
+    <section class="afh-hero afh-hero--video-bg" aria-label="Hero">
       <div class="afh-hero__main">
-        <div class="afh-hero__bg" aria-hidden="true"></div>
+        <div class="afh-hero__video-bg" role="region" aria-label="Afro Health hero: active lifestyles and daily wellness.">
+          <video
+            class="afh-hero__video afh-hero__video--bg"
+            src="https://cdn.shopify.com/videos/c/o/v/d426147b68ed42cc9c6d5fa700b0eb7d.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+          ></video>
+          <div class="afh-hero__video-scrim" aria-hidden="true"></div>
+        </div>
 
         <div class="afh-hero__inner">
           <div class="afh-hero__layout">
@@ -51,21 +61,6 @@
                 Claim your 20%
                 <span class="afh-hero__cta-icon" aria-hidden="true">→</span>
               </a>
-            </div>
-
-            <div class="afh-hero__video-stage" data-afh-animate="2">
-              <div class="afh-hero__video-frame">
-                <video
-                  class="afh-hero__video"
-                  src="https://cdn.shopify.com/videos/c/o/v/d426147b68ed42cc9c6d5fa700b0eb7d.mp4"
-                  autoplay
-                  muted
-                  loop
-                  playsinline
-                  preload="auto"
-                  aria-label="Afro Health hero: active lifestyles and daily wellness."
-                ></video>
-              </div>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 /**
- * AfroHealth — Split hero: copy left, ~10 s looping hero video right (gym + herbs).
+ * AfroHealth — Full-bleed hero video with copy overlaid; nutrition tips bar below.
  */
 
 .afh-hero {
@@ -22,15 +22,21 @@
   min-height: min(100vh, 1080px);
 }
 
+.afh-hero--video-bg {
+  background: #1a1f1a;
+}
+
 .afh-hero__main {
   position: relative;
   flex: 1 1 auto;
   display: flex;
   align-items: center;
-  min-height: min(72vh, 760px);
+  min-height: min(78vh, 820px);
   padding-bottom: 2rem;
+  overflow: hidden;
 }
 
+/* Fallback when no video (Shopify / optional) */
 .afh-hero__bg {
   position: absolute;
   inset: 0;
@@ -44,9 +50,41 @@
   pointer-events: none;
 }
 
+.afh-hero__video-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.afh-hero__video--bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.afh-hero__video-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    rgba(250, 252, 248, 0.96) 0%,
+    rgba(250, 252, 248, 0.88) 32%,
+    rgba(250, 252, 248, 0.45) 55%,
+    rgba(250, 252, 248, 0.12) 78%,
+    rgba(26, 31, 26, 0.25) 100%
+  );
+}
+
 .afh-hero__inner {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   max-width: 1220px;
   margin: 0 auto;
@@ -55,10 +93,8 @@
 }
 
 .afh-hero__layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.95fr);
-  gap: clamp(1.25rem, 3.5vw, 2.75rem);
-  align-items: center;
+  display: block;
+  max-width: 36rem;
 }
 
 .afh-hero__content {
@@ -210,30 +246,7 @@
   transform: translateX(3px);
 }
 
-/* Hero video (~10 s file, loops): replaces former photo + tips bar area */
-.afh-hero__video-stage {
-  justify-self: end;
-  width: 100%;
-  max-width: min(100%, 520px);
-}
-
-.afh-hero__video-frame {
-  position: relative;
-  overflow: hidden;
-  border-radius: clamp(1.25rem, 3vw, 2rem);
-  aspect-ratio: 4 / 5;
-  min-height: min(78vh, 820px);
-  box-shadow:
-    0 24px 56px rgba(45, 90, 40, 0.15),
-    0 0 0 1px rgba(255, 255, 255, 0.65) inset;
-  background: #1c211c;
-}
-
 .afh-hero__video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
   display: block;
 }
 
@@ -446,18 +459,13 @@
 }
 
 @media (max-width: 960px) {
-  .afh-hero__layout {
-    grid-template-columns: 1fr;
-  }
-
-  .afh-hero__video-stage {
-    justify-self: center;
-    max-width: 400px;
-    order: -1;
-  }
-
-  .afh-hero__video-frame {
-    min-height: min(52vh, 480px);
+  .afh-hero__video-scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(250, 252, 248, 0.94) 0%,
+      rgba(250, 252, 248, 0.82) 45%,
+      rgba(250, 252, 248, 0.35) 100%
+    );
   }
 
   .afh-hero__feature-inner {

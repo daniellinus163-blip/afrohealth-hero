@@ -1,5 +1,5 @@
 {% comment %}
-  AfroHealth — Split hero: copy left, looping hero video right (upload or MP4 URL; default matches afrohealth.co.uk).
+  AfroHealth — Full-bleed hero video with copy overlaid; MP4 URL or upload; nutrition tips bar below.
 {% endcomment %}
 
 {{ 'afrohealth-hero.css' | asset_url | stylesheet_tag }}
@@ -9,11 +9,47 @@
 
 <section
   id="afh-hero-{{ section.id }}"
-  class="afh-hero"
+  class="afh-hero{% if section.settings.hero_video != blank or section.settings.hero_video_url != blank %} afh-hero--video-bg{% endif %}"
   aria-label="{{ section.settings.heading_line_1 | escape }}"
 >
   <div class="afh-hero__main">
-    <div class="afh-hero__bg" aria-hidden="true"></div>
+    {% if section.settings.hero_video != blank or section.settings.hero_video_url != blank %}
+      <div
+        class="afh-hero__video-bg"
+        role="region"
+        {% if section.settings.hero_video_aria_label != blank %}
+          aria-label="{{ section.settings.hero_video_aria_label | escape }}"
+        {% endif %}
+      >
+        {% if section.settings.hero_video != blank %}
+          {{
+            section.settings.hero_video
+            | video_tag:
+              class: 'afh-hero__video afh-hero__video--bg',
+              autoplay: true,
+              loop: true,
+              muted: true,
+              controls: false,
+              playsinline: true,
+              preload: 'auto',
+              image_size: '1920x'
+          }}
+        {% else %}
+          <video
+            class="afh-hero__video afh-hero__video--bg"
+            src="{{ section.settings.hero_video_url | escape }}"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+          ></video>
+        {% endif %}
+        <div class="afh-hero__video-scrim" aria-hidden="true"></div>
+      </div>
+    {% else %}
+      <div class="afh-hero__bg" aria-hidden="true"></div>
+    {% endif %}
 
     <div class="afh-hero__inner">
       <div class="afh-hero__layout">
@@ -52,44 +88,6 @@
             </a>
           {% endif %}
         </div>
-
-        {% if section.settings.hero_video != blank or section.settings.hero_video_url != blank %}
-          <div
-            class="afh-hero__video-stage"
-            data-afh-animate="2"
-            {% if section.settings.hero_video_aria_label != blank %}
-              role="region"
-              aria-label="{{ section.settings.hero_video_aria_label | escape }}"
-            {% endif %}
-          >
-            <div class="afh-hero__video-frame">
-              {% if section.settings.hero_video != blank %}
-                {{
-                  section.settings.hero_video
-                  | video_tag:
-                    class: 'afh-hero__video',
-                    autoplay: true,
-                    loop: true,
-                    muted: true,
-                    controls: false,
-                    playsinline: true,
-                    preload: 'auto',
-                    image_size: '1100x'
-                }}
-              {% else %}
-                <video
-                  class="afh-hero__video"
-                  src="{{ section.settings.hero_video_url | escape }}"
-                  autoplay
-                  muted
-                  loop
-                  playsinline
-                  preload="auto"
-                ></video>
-              {% endif %}
-            </div>
-          </div>
-        {% endif %}
       </div>
     </div>
   </div>
@@ -165,7 +163,7 @@
       "type": "video",
       "id": "hero_video",
       "label": "Hero video (uploaded)",
-      "info": "Optional. If empty, the MP4 URL below is used (default matches afrohealth.co.uk hero)."
+      "info": "Optional. Full-bleed behind hero text. If empty, the MP4 URL below is used (default matches afrohealth.co.uk)."
     },
     {
       "type": "text",
