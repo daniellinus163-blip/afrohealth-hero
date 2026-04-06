@@ -33,16 +33,38 @@
     <div class="afh-hero__inner">
       <div class="afh-hero__content">
         {% if section.settings.eyebrow != blank %}
-          <p class="afh-hero__eyebrow afh-text-shimmer" data-afh-animate="1">{{ section.settings.eyebrow | escape }}</p>
+          <p class="afh-hero__eyebrow" data-afh-animate="1">{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
 
-        <h1 class="afh-hero__headline afh-text-shimmer" data-afh-animate="2">
+        <h1 class="afh-hero__headline" data-afh-animate="2">
           {{ section.settings.heading_line_1 | escape }}<br>
           {{ section.settings.heading_line_2_prefix | escape }}
           {% if section.settings.heading_accent != blank %}
             <span class="afh-hero__accent">{{ section.settings.heading_accent | escape }}</span>
           {% endif %}
         </h1>
+
+        {% if section.settings.subheading != blank %}
+          <p class="afh-hero__sub" data-afh-animate="3">{{ section.settings.subheading | escape }}</p>
+        {% endif %}
+
+        <div class="afh-hero__trust" data-afh-animate="4">
+          <div class="afh-hero__trust-row">
+            <span class="afh-hero__stars" aria-label="{{ section.settings.reviews_rating_label | escape }}">★★★★★</span>
+            <span class="afh-hero__trust-text">{{ section.settings.reviews_text | escape }}</span>
+          </div>
+          <span class="afh-hero__trust-sep" aria-hidden="true"></span>
+          <span class="afh-hero__trust-pill">{{ section.settings.trust_pill_1 | escape }}</span>
+          <span class="afh-hero__trust-sep" aria-hidden="true"></span>
+          <span class="afh-hero__trust-pill afh-hero__trust-pill--blue">{{ section.settings.trust_pill_2 | escape }}</span>
+        </div>
+
+        {% if section.settings.cta_label != blank %}
+          <a class="afh-hero__cta afh-hero__cta--outline" href="{{ section.settings.cta_link }}" data-afh-animate="5">
+            {{ section.settings.cta_label | escape }}
+            <span class="afh-hero__cta-icon" aria-hidden="true">→</span>
+          </a>
+        {% endif %}
       </div>
     </div>
   </div>
