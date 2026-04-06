@@ -1,5 +1,5 @@
 /**
- * AfroHealth — Dark deep-green full-bleed video hero; copy on the background (no card).
+ * AfroHealth — Full-bleed hero (photo or video); copy on the background (no card).
  * Deep greens + light blue (#90CAF9 / #64B5F6) accents.
  */
 
@@ -23,6 +23,45 @@
 
 .afh-hero--video-bg {
   background: var(--afh-deep);
+}
+
+.afh-hero--photo-bg {
+  background: #c9a88a;
+}
+
+.afh-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.afh-hero__bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+}
+
+.afh-hero__media-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(13, 31, 23, 0.92) 0%,
+    rgba(13, 31, 23, 0.58) 38%,
+    rgba(13, 31, 23, 0.2) 55%,
+    rgba(13, 31, 23, 0.04) 100%
+  );
+}
+
+.afh-hero--photo-bg .afh-hero__main {
+  align-items: center;
 }
 
 .afh-hero__main {
@@ -288,6 +327,15 @@
       rgba(10, 24, 18, 0.82) 0%,
       rgba(13, 31, 23, 0.7) 45%,
       rgba(8, 22, 16, 0.94) 100%
+    );
+  }
+
+  .afh-hero__media-scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(13, 31, 23, 0.9) 0%,
+      rgba(13, 31, 23, 0.55) 42%,
+      rgba(13, 31, 23, 0.2) 100%
     );
   }
 }

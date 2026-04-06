@@ -1,5 +1,5 @@
 {% comment %}
-  AfroHealth — Dark deep-green hero video, copy over background (no card); light blue accents.
+  AfroHealth — Hero photo or video, copy over background (no card); light blue accents.
 {% endcomment %}
 
 {{ 'afrohealth-hero.css' | asset_url | stylesheet_tag }}
@@ -9,11 +9,24 @@
 
 <section
   id="afh-hero-{{ section.id }}"
-  class="afh-hero{% if section.settings.hero_video != blank or section.settings.hero_video_url != blank %} afh-hero--video-bg{% endif %}"
+  class="afh-hero{% if section.settings.hero_background_image != blank %} afh-hero--photo-bg{% elsif section.settings.hero_video != blank or section.settings.hero_video_url != blank %} afh-hero--video-bg{% endif %}"
   aria-label="{{ section.settings.heading_line_1 | escape }}"
 >
   <div class="afh-hero__main">
-    {% if section.settings.hero_video != blank or section.settings.hero_video_url != blank %}
+    {% if section.settings.hero_background_image != blank %}
+      <div class="afh-hero__media" aria-hidden="true">
+        <img
+          class="afh-hero__bg-image"
+          src="{{ section.settings.hero_background_image | image_url: width: 2400 }}"
+          alt=""
+          width="1920"
+          height="1080"
+          loading="eager"
+          decoding="async"
+        >
+        <div class="afh-hero__media-scrim"></div>
+      </div>
+    {% elsif section.settings.hero_video != blank or section.settings.hero_video_url != blank %}
       <div
         class="afh-hero__video-bg"
         role="region"
@@ -99,6 +112,12 @@
   "tag": "section",
   "class": "section-afrohealth-hero",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_background_image",
+      "label": "Hero background image",
+      "info": "Full-bleed behind hero text. When set, replaces the video background."
+    },
     {
       "type": "video",
       "id": "hero_video",
