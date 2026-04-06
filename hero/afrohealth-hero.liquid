@@ -1,5 +1,5 @@
 {% comment %}
-  AfroHealth — Hero photo or video, copy over background (no card); light blue accents.
+  AfroHealth — Full-bleed hero image; copy over background (no card); light blue accents.
 {% endcomment %}
 
 {{ 'afrohealth-hero.css' | asset_url | stylesheet_tag }}
@@ -9,7 +9,7 @@
 
 <section
   id="afh-hero-{{ section.id }}"
-  class="afh-hero{% if section.settings.hero_background_image != blank %} afh-hero--photo-bg{% elsif section.settings.hero_video != blank or section.settings.hero_video_url != blank %} afh-hero--video-bg{% endif %}"
+  class="afh-hero{% if section.settings.hero_background_image != blank %} afh-hero--photo-bg{% endif %}"
   aria-label="{{ section.settings.heading_line_1 | escape }}"
 >
   <div class="afh-hero__main">
@@ -25,40 +25,6 @@
           decoding="async"
         >
         <div class="afh-hero__media-scrim"></div>
-      </div>
-    {% elsif section.settings.hero_video != blank or section.settings.hero_video_url != blank %}
-      <div
-        class="afh-hero__video-bg"
-        role="region"
-        {% if section.settings.hero_video_aria_label != blank %}
-          aria-label="{{ section.settings.hero_video_aria_label | escape }}"
-        {% endif %}
-      >
-        {% if section.settings.hero_video != blank %}
-          {{
-            section.settings.hero_video
-            | video_tag:
-              class: 'afh-hero__video afh-hero__video--bg',
-              autoplay: true,
-              loop: true,
-              muted: true,
-              controls: false,
-              playsinline: true,
-              preload: 'auto',
-              image_size: '1920x'
-          }}
-        {% else %}
-          <video
-            class="afh-hero__video afh-hero__video--bg"
-            src="{{ section.settings.hero_video_url | escape }}"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-          ></video>
-        {% endif %}
-        <div class="afh-hero__video-scrim" aria-hidden="true"></div>
       </div>
     {% else %}
       <div class="afh-hero__bg" aria-hidden="true"></div>
@@ -116,26 +82,7 @@
       "type": "image_picker",
       "id": "hero_background_image",
       "label": "Hero background image",
-      "info": "Full-bleed behind hero text. When set, replaces the video background."
-    },
-    {
-      "type": "video",
-      "id": "hero_video",
-      "label": "Hero video (uploaded)",
-      "info": "Optional. Full-bleed behind hero text. If empty, the MP4 URL below is used."
-    },
-    {
-      "type": "text",
-      "id": "hero_video_url",
-      "label": "Hero video MP4 URL",
-      "default": "https://cdn.shopify.com/videos/c/o/v/d426147b68ed42cc9c6d5fa700b0eb7d.mp4",
-      "info": "Direct link to your looping hero clip."
-    },
-    {
-      "type": "text",
-      "id": "hero_video_aria_label",
-      "label": "Video description (accessibility)",
-      "default": "Afro Health hero: active lifestyles and daily wellness."
+      "info": "Full-bleed behind hero text. Upload your hero artwork (model on the right works best)."
     },
     {
       "type": "text",

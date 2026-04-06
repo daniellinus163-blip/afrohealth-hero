@@ -1,5 +1,5 @@
 /**
- * AfroHealth — Full-bleed hero (photo or video); copy on the background (no card).
+ * AfroHealth — Full-bleed hero image; copy on the background (no card).
  * Deep greens + light blue (#90CAF9 / #64B5F6) accents.
  */
 
@@ -21,12 +21,8 @@
   min-height: min(100vh, 1080px);
 }
 
-.afh-hero--video-bg {
-  background: var(--afh-deep);
-}
-
 .afh-hero--photo-bg {
-  background: #c9a88a;
+  background: #c49d81;
 }
 
 .afh-hero__media {
@@ -81,37 +77,6 @@
   z-index: 0;
   background: linear-gradient(165deg, var(--afh-deep) 0%, var(--afh-deep-mid) 55%, #0a1812 100%);
   pointer-events: none;
-}
-
-.afh-hero__video-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.afh-hero__video--bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.afh-hero__video-scrim {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 24, 18, 0.75) 0%,
-    rgba(13, 31, 23, 0.55) 38%,
-    rgba(13, 31, 23, 0.82) 72%,
-    rgba(8, 22, 16, 0.92) 100%
-  );
 }
 
 .afh-hero__inner {
@@ -274,11 +239,6 @@
 .afh-hero__cta:hover .afh-hero__cta-icon {
   transform: translateX(3px);
 }
-
-.afh-hero__video {
-  display: block;
-}
-
 .afh-hero [data-afh-animate] {
   opacity: 0;
   transform: translate3d(0, 14px, 0);
@@ -321,15 +281,6 @@
 }
 
 @media (max-width: 960px) {
-  .afh-hero__video-scrim {
-    background: linear-gradient(
-      180deg,
-      rgba(10, 24, 18, 0.82) 0%,
-      rgba(13, 31, 23, 0.7) 45%,
-      rgba(8, 22, 16, 0.94) 100%
-    );
-  }
-
   .afh-hero__media-scrim {
     background: linear-gradient(
       180deg,

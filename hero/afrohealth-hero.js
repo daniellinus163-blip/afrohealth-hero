@@ -1,5 +1,5 @@
 /**
- * AfroHealth hero — .is-visible for staggered copy entrance; pauses hero video if reduced motion.
+ * AfroHealth hero — .is-visible for staggered copy entrance.
  */
 (function () {
   var hero = document.querySelector(".afh-hero");
@@ -13,11 +13,6 @@
 
   if (reduceMotion) {
     reveal();
-    var vid = hero.querySelector(".afh-hero__video");
-    if (vid) {
-      vid.removeAttribute("autoplay");
-      vid.pause();
-    }
   } else {
     requestAnimationFrame(function () {
       requestAnimationFrame(reveal);
